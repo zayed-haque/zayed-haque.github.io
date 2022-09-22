@@ -19,6 +19,32 @@ h2,.white{
     color: #fff;
 }
 
+
+/* Style buttons */
+.btn {
+  
+                display: inline-block;
+                outline: 0;
+                border: 0;
+                cursor: pointer;
+                border-radius: 8px;
+                padding: 14px 24px 16px;
+                font-size: 18px;
+                font-weight: 700;
+                line-height: 1;
+                transition: transform 200ms,background 200ms;
+                background: transparent;
+                color: #808080;
+                box-shadow: 0 0 0 3px #000000 inset;
+                
+                
+}
+
+/* Darker background on mouse-over */
+.btn:hover{
+    transform: translateY(-2px);
+}
+
 a{
     color: #7A7C80;
     text-decoration: none;
@@ -47,6 +73,10 @@ a{
 .profile-picture{
   border-radius: 50%;
 }
+.profile-picture:hover{
+  border-radius: 0%;
+}
+
 /* section 2 */
 .section-2{
     padding-top: 10vh;
