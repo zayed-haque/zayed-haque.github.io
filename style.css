@@ -18,6 +18,28 @@ body{
 h2,.white{
     color: #fff;
 }
+div.gallery {
+    padding-top: 10vh;
+    width: 70%;
+    margin: 5px;
+    border: 1px solid #ccc;
+    float: left;
+    width: 180px;
+  }
+  
+  div.gallery:hover {
+    border: 1px solid #777;
+  }
+  
+  div.gallery img {
+    width: 100%;
+    height: auto;
+  }
+  
+  div.desc {
+    padding: 15px;
+    text-align: center;
+  }
 
 
 /* Style buttons */
@@ -74,8 +96,12 @@ a{
   border-radius: 50%;
 }
 .profile-picture:hover{
-  border-radius: 0%;
+  border-radius: 15%;
 }
+.profile-picture-1{
+    width:200px;
+    border-radius: 0%;
+  }
 
 /* section 2 */
 .section-2{
