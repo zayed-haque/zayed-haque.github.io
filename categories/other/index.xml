@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Other | Skanda Vaidyanath</title>
+    <link>https://skandavaidyanath.github.io/categories/other/</link>
+      <atom:link href="https://skandavaidyanath.github.io/categories/other/index.xml" rel="self" type="application/rss+xml" />
+    <description>Other</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Mon, 27 Dec 2021 12:44:33 -0800</lastBuildDate>
+    <image>
+      <url>https://skandavaidyanath.github.io/img/icon-192.png</url>
+      <title>Other</title>
+      <link>https://skandavaidyanath.github.io/categories/other/</link>
+    </image>
+    
+    <item>
+      <title>Jigsaw: Large Language Models meet Program Synthesis</title>
+      <link>https://skandavaidyanath.github.io/project/jigsaw/</link>
+      <pubDate>Mon, 27 Dec 2021 12:44:33 -0800</pubDate>
+      <guid>https://skandavaidyanath.github.io/project/jigsaw/</guid>
+      <description>&lt;p&gt;Used program synthesis techniques to generate code from multi-modal user input using large language models like GPT-3. Developed a Jupyter notebook extension to generate code from user commands and I/O examples for the Pandas library in Python. This project was done under the guidance of &lt;a href=&#34;https://www.microsoft.com/en-us/research/people/sriram/&#34;&gt;Dr. Sriram Rajamani&lt;/a&gt; at Microsoft Research, India.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

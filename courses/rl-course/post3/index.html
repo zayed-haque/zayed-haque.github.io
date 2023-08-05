@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.5.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Skanda Vaidyanath">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="In the last post, we discussed the three major challenges RL algorithms need to tackle and then went on to Markov Decision Processes (MDPs). We&rsquo;ll start this post with a quick recap of some important concepts from the last post and then move on to new ideas.
+   An MDP. Source: Google Images   An MDP formally describes the environment for RL when the environment is fully observable i.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://skandavaidyanath.github.io/courses/rl-course/post3/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="anonymous">
+    
+
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.min.8565976d7831ba0a0daf18ae5d4ff0e8.css">
+
+  
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://skandavaidyanath.github.io/courses/rl-course/post3/">
+
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="Skanda Vaidyanath">
+  <meta property="og:url" content="https://skandavaidyanath.github.io/courses/rl-course/post3/">
+  <meta property="og:title" content="Policies, Value Functions and the Bellman Equation | Skanda Vaidyanath">
+  <meta property="og:description" content="In the last post, we discussed the three major challenges RL algorithms need to tackle and then went on to Markov Decision Processes (MDPs). We&rsquo;ll start this post with a quick recap of some important concepts from the last post and then move on to new ideas.
+   An MDP. Source: Google Images   An MDP formally describes the environment for RL when the environment is fully observable i."><meta property="og:image" content="https://skandavaidyanath.github.io/img/icon-192.png">
+  <meta property="twitter:image" content="https://skandavaidyanath.github.io/img/icon-192.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2019-05-05T00:00:00&#43;01:00">
+    
+    <meta property="article:modified_time" content="2019-05-05T00:00:00&#43;01:00">
+  
+
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Policies, Value Functions and the Bellman Equation | Skanda Vaidyanath</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0 compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/">Skanda Vaidyanath</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav mr-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#post"><span>Blog</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publications"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/courses/"><span>Courses</span></a>
+        </li>
+
+        
+        
+
+      
+      </ul>
+      <ul class="navbar-nav ml-auto">
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+  
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      
+
+
+
+
+
+<form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-3" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <span><i class="fas fa-bars"></i></span>
+  </button>
+
+  
+  <input name="q" type="search" class="form-control" placeholder="Search..." autocomplete="off">
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  <div class="docs-toc-item">
+    <a class="docs-toc-link" href="/courses/rl-course/">Overview</a>
+
+  </div>
+  
+  <div class="docs-toc-item">
+    <a class="docs-toc-link" href="/courses/rl-course/post1/">Reinforcement Learning from Scratch</a>
+    <ul class="nav docs-sidenav">
+      
+      <li >
+        <a href="/courses/rl-course/post1/">Introduction: Why RL?</a>
+      </li>
+      
+      <li >
+        <a href="/courses/rl-course/post2/">RL Fundamentals and MDPs</a>
+      </li>
+      
+      <li class="active">
+        <a href="/courses/rl-course/post3/">Policies, Value Functions and the Bellman Equation</a>
+      </li>
+      
+    </ul>
+    
+
+  </div>
+  
+  
+</nav>
+
+    </div>
+
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#more-on-delayed-rewards">More on Delayed Rewards</a></li>
+    <li><a href="#more-on-the-explore-exploit-dilemma">More on the Explore-Exploit dilemma</a></li>
+    <li><a href="#more-jargon-and-symbols">More Jargon and Symbols</a>
+      <ul>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#the-bellman-equation">The Bellman Equation</a></li>
+    <li><a href="#optimality-equations">Optimality Equations</a>
+      <ul>
+        <li><a href="#references">References</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+
+      
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <article class="article">
+
+        <div class="docs-article-container">
+          <h1>Policies, Value Functions and the Bellman Equation</h1>
+
+          <div class="article-style">
+            <p>In the last post, we discussed the three major challenges RL algorithms need to tackle and then went on to Markov Decision Processes (MDPs). We&rsquo;ll start this post with a quick recap of some important concepts from the last post and then move on to new ideas.</p>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="/img/post2_mdp.png" data-caption="An MDP. Source: Google Images">
+<img src="/img/post2_mdp.png" alt="" ></a>
+
+
+  
+  
+  <figcaption>
+    An MDP. Source: Google Images
+  </figcaption>
+
+
+</figure>
+
+<p>An MDP formally describes the environment for RL when the environment is fully observable i.e. we know all the values of the relevant state variables. In other words, the current state completely characterises the process. Almost all RL problems are formulated as MDPs. This is the same MDP we saw in the previous post. We already discussed the different components of an MDP i.e. the states, the actions, the transition function, reward function and the discount factor $\gamma$. If you need to refresh your memory about any of these, refer back to the previous post before you go ahead.
+Here is the Markov property once again for your reference. The future is independent of the past given the present and the state captures all relevant information from the history. This means once we know what state we are in, we don&rsquo;t care how we got to the state in the first place i.e. the state is a sufficient statistic of the future.</p>
+<p>$$P(s_{t+1}|s_t,a) = P(s_{t+1}|s_t,s_{t-1},s_{t-2},s_{t-3},&hellip;,a)$$</p>
+<h2 id="more-on-delayed-rewards">More on Delayed Rewards</h2>
+<p>Lets quickly recap the idea of delayed rewards once again. Look at the MDP below (and please ignore all religious connotations that might be implied). Clearly in the MDP below, from earth, the right move is to go to Heaven since you get a reward of +1 in perpetuity even though you get a negative reward to make the transition in the first place. Although the transition to hell initially looks like a good move, you get a -1 in perpetuity and hence doesn&rsquo;t work well in the long term.</p>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="/img/post3_heaven_hell_mdp.PNG" data-caption="Accounting for delayed rewards">
+<img src="/img/post3_heaven_hell_mdp.PNG" alt="" ></a>
+
+
+  
+  
+  <figcaption>
+    Accounting for delayed rewards
+  </figcaption>
+
+
+</figure>
+
+<p>Although this is not a finite horizon MDP (recall what this means from the last post), the idea is that we want to account not just for immediate gains but long term gains as well.
+We already saw how the discount factor and returns allow us to account for this. In fact a $\gamma$ close to 0 leads to &ldquo;myopic&rdquo; or &ldquo;short-sighted&rdquo; evaluation and a $\gamma$ close to 1 leads to &ldquo;far-sighted&rdquo; evaluation.
+We often pick a value in between 0 and 1 but closer to 1.
+We will revisit the returns definition later in this post.</p>
+<h2 id="more-on-the-explore-exploit-dilemma">More on the Explore-Exploit dilemma</h2>
+<p>Lets talk about the exploration-exploitation dilemma we referred to in the last post as well. Look at the figure given below.</p>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="/img/post3_explore_exploit.PNG" data-caption="Exploration vs Exploitation. Source: Lecture 11 of this">
+<img src="/img/post3_explore_exploit.PNG" alt="" ></a>
+
+
+  
+  
+  <figcaption>
+    Exploration vs Exploitation. Source: Lecture 11 of <a href="http://ai.berkeley.edu/lecture_slides.html">this</a>
+  </figcaption>
+
+
+</figure>
+
+<p>The exploration vs exploitation dilemma exists in our everyday lives as well. Imagine your favorite restaurant is right around the corner and you&rsquo;ve been there plenty of times. If you go there every day, you would be confident of what you&rsquo;ll get, but you don&rsquo;t know what you&rsquo;re possibly missing. If you tried different places, you could occasionally be visiting a terrible place but you could also find a new place that is better than this one. So it makes sense to explore and try new places but once you have a good idea pf what&rsquo;s in the area, you can start exploiting and go to your favourite place.
+This is exactly what we want our agents to do as well in RL. We want them to explore (randomly or based on some strategy) intially and when its sure of the best actions from each state, it can exploit that knowledge to gain high rewards.</p>
+<h2 id="more-jargon-and-symbols">More Jargon and Symbols</h2>
+<p>Now that we&rsquo;re done with that recap, lets get on to some new material. This is the most important section of this post and perhaps the entire series so make sure you understand exactly what&rsquo;s going on in this section.</p>
+<h4 id="returns">Returns</h4>
+<p>We already discussed what returns are in the previous post, but here is the formal expression</p>
+<p>$$G_t = r_{t+1}+\gamma r_{t+2}+&hellip;r_{T} = \sum_{k=t}^{T-1} \gamma^{k}r_{k+1}$$</p>
+<p>We end the episode at the timestep <em>T</em> because we assume a finite horizon MDP. Remember that <em>T</em> is a random variable &ndash; for example when we play tic-tact-toe, the game could end in a different number of moves each time. Each of the independent $r_{k}$ terms are also random variables and hence, $G_{t}$ is also a random variable. Further, since each reward term is usually finite, the returns does not blow up to infinity.
+As we have already discussed, the discount factor is a number between 0 and 1 and often close to 1 and is chosen according to the problem at hand. Also recall that $r_{t+1}$ is the reward received by performing action $a_{t}$ at state $s_{t}$ ; $r_{t+1} = R(s_{t}, a_{t})$ where <em>R</em> is the reward function.
+So this means that $G_{t}$ is the returns accumulated from the state $s_{t}$. When we try to come up with RL algorithms we want to try and optimise $G_{t}$ at all points in the trajectory.</p>
+<h4 id="policy">Policy</h4>
+<p>$$\pi_t(a|s) = P(a_t=a|s_t=s)$$</p>
+<p>The policy is a mapping from states to actions or action distributions. The above eqation reads as the probability of taking an action <em>a</em> at time <em>t</em> given that the state at time <em>t</em> was <em>s</em>.
+A <em>stationary policy</em> is time-independent which means we can omit the timestep variable <em>t</em>. No matter at what point we are in the trajectory, under the policy, if we are at state <em>s</em>, then the action we take (or the probability distribution over the actions we can take) is the same. So unless we are specifically talking about non-stationary policies, we omit the <em>t</em> notation.
+Another important distinction is between <em>stochastic</em> and <em>deterministic</em> policies. A deterministic policy is a mapping $\pi: S \rightarrow A$ which is essentially a function that maps each state to a single action. A stochastic policy on the other hand maps each state to a probability distribution over all the actions. So a deterministic policy can be thought of as a stochstic policy where only the probability of one of the actions is non-zero.<br>
+In all RL problems, we want to learn the policy of the problem and we do this by either trying to learn the policy directly or by learning the policy through the following functions.</p>
+<h4 id="value-function">Value function</h4>
+<p>$$V^{\pi}(s) = E_{\pi}(G_{t}|s_{t}=s)$$</p>
+<p><em>V</em> is the value function of the state associated with the policy $\pi$. It is the expectation of the returns from the state with respect to the policy $\pi$. Note that $G_{t}$ itself depends on $\pi$ as the next reward depends on $\pi$.
+Since the <em>V</em> function is the expectation of the returns from the state, it tells us how good a state is i.e. what is the expected sum of rewards we can accumulate from a given state under the current policy. So it is a measure of &ldquo;goodness&rdquo; of a state.</p>
+<h4 id="q-function">Q function</h4>
+<p>$$Q^{\pi}(s,a) = E_{\pi}(G_{t}|s_{t}=s, a_{t}=a)$$</p>
+<p>This is the Q-function and it is almost the same as the value function, except that here, the first action you take from state <em>s</em> is always <em>a</em> and then you follow the policy $\pi$ from then on.
+Like the value function, the Q-function tells us not only how good a state is but also how good it is to pick each action from the state. So if $Q^{\pi}(s,a1)$ is greater than $Q^{\pi}(s,a2)$ then it is better to choose action <em>a1</em> versus action <em>a2</em> in state <em>s</em> <em>under the given policy</em>. So it tells us the &ldquo;goodness&rdquo; of each action in the state.
+The value function and the Q-function are crucial for several RL algorithms that we will be seeing over the next few posts.</p>
+<h2 id="the-bellman-equation">The Bellman Equation</h2>
+<p>If we were able to find the <em>optimal</em> value function of each state in the MDP or the Q-function of each state-action pair, then we have solved the RL problem. We will define what &ldquo;optimal&rdquo; means in the next section but for now, just understand that it means &ldquo;the best in terms of collecting maximum rewards&rdquo;. Because at each state, we keep moving to the next potential state with the highest value function (or the state with the potential to collect maximum returns). Or in terms of Q-functions, from each state, we play the action with the highest Q-function value from that state. So we&rsquo;re being greedy with our choices and eventually we keep moving across states in the MDP in this manner until the episode ends. Since we move across states with the highest value function, we collect maximum returns along the way (by virtue of the definition of value functions and a similar argument is true for Q-functions).</p>
+<p>But by doing this, we&rsquo;re also learning a mapping from states to actions i.e. a policy. So if we have the estimates of the <em>optimal</em> value functions, we can estimate the <em>optimal</em> policy. This can be tricky to understand because we estimate the value functions using a policy and then we extract a policy by being greedy over the value function. But more on this later.</p>
+<p>So if our estimates of the value functions and Q-functions are optimal, we will be gaining the maximum possible reward in the MDP and would have solved the RL problem. But how do we find the optimal Q-function values or value function values? Remember <em>Q</em> and <em>V</em> aren&rsquo;t necessarily the optimal values, they are just the values under some policy $\pi$ (which may not be the optimal policy).</p>
+<p>All of this probably seems confusing now but will be much clearer with the math in the images below and in the next section when we introduce some more simple equations. For now, it is important to understand the importance of trying to learn these &ldquo;optimal&rdquo; value functions and Q-functions.</p>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="/img/post3_bellman_expectation_1.PNG" data-caption="Bellman Expectation Equations (1). THIS IS VERY IMPORTANT!">
+<img src="/img/post3_bellman_expectation_1.PNG" alt="" ></a>
+
+
+  
+  
+  <figcaption>
+    Bellman Expectation Equations (1). THIS IS VERY IMPORTANT!
+  </figcaption>
+
+
+</figure>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="/img/post3_bellman_expectation_2.PNG" data-caption="Bellman Expectation Equations (2). THIS IS VERY IMPORTANT!">
+<img src="/img/post3_bellman_expectation_2.PNG" alt="" ></a>
+
+
+  
+  
+  <figcaption>
+    Bellman Expectation Equations (2). THIS IS VERY IMPORTANT!
+  </figcaption>
+
+
+</figure>
+
+<p>Note that the Bellman Expectation Equations form a system of equations &ndash; one equation for every state. There are as many equations as there are number of states. The variables are $V^{\pi}(s)$ for all <em>s</em>. 
+So we have <em>n</em> equations for <em>n</em> states and this system of equations will always have a unique solution because the transition matrix is a <a href="https://en.wikipedia.org/wiki/Stochastic_matrix">stochastic matrix</a>.
+The equations are linear and they are solvable.</p>
+<h2 id="optimality-equations">Optimality Equations</h2>
+<p>The aim of RL is to learn an optimal policy i.e. an optimal mapping from states to actions that can allow the agent to accumulate maximum rewards as it goes on a trajectory (governed by this policy) through the MDP. We want a $\pi$ such that for no other $\pi$ can we get better expected returns.</p>
+<p>$\pi^{*} = \underset{\pi}{\operatorname{argmax}} E_{\pi}[G_{t}|s_{t}=s] \forall s$</p>
+<p>And this can be written as:</p>
+<p>$\pi^{*} = \underset{\pi}{\operatorname{argmax}} V^{\pi}(s) \forall s$</p>
+<p>Here, $\pi^{*}$ is the optimal policy. The $\forall s$ tells us that this is true at any starting state or even any state in the trajectory. Note that there may be more than one optimal policy and in that case, we will take any one of them.
+However, <em>even though there are several possible optimal policies, there is only one possible setting for the optimal value functions</em>, i.e. there may be several optimal $\pi^{*}$ but there can be only one optimal $V^{\pi^{*}}$. Think about this for a second and convince yourself that this is in fact true.</p>
+<p>$V^{\pi^{*}} = \underset{\pi}{\operatorname{argmax}} V^{\pi}(s) \forall s = V^{*}$</p>
+<p>$V^{*}$ is the optimal value function. The existence of such an optimal value function and hence an optimal policy that is able to reach the maximum value function <em>for all states</em> has been proven in finite MDPs (it gets trickier in infinite MDPs but still holds for some settings). The proof is quite intricate but I have attached some notes from this <a href="https://nptel.ac.in/courses/106106143/">NPTEL course</a> in the reference section for the interested reader.</p>
+<p>The math in the following images talk about the Bellman Optimality Equations. Once again, this is very important for the rest of the course.</p>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="/img/post3_bellman_optimality_1.PNG" data-caption="Bellman Optimality Equations (1). THIS IS VERY IMPORTANT!">
+<img src="/img/post3_bellman_optimality_1.PNG" alt="" ></a>
+
+
+  
+  
+  <figcaption>
+    Bellman Optimality Equations (1). THIS IS VERY IMPORTANT!
+  </figcaption>
+
+
+</figure>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="/img/post3_bellman_optimality_2.PNG" data-caption="Bellman Optimality Equations (2). THIS IS VERY IMPORTANT!">
+<img src="/img/post3_bellman_optimality_2.PNG" alt="" ></a>
+
+
+  
+  
+  <figcaption>
+    Bellman Optimality Equations (2). THIS IS VERY IMPORTANT!
+  </figcaption>
+
+
+</figure>
+
+<p>Now if we could solve the Bellman Optimality Equations, we would be done but unfortunately because of the <em>max</em> operator, the equations are non-linear and cannot be solved easily.
+So we need to think about how we can solve this problem.</p>
+<p>Phew! That was a long post with a lot of information to take in but it is extremely important that you understand the ideas in this post clearly. In the next post, we&rsquo;ll move on to our first RL algorithm so make sure you check it out!</p>
+<p>Let me know if you have any feedback or suggestions.</p>
+<h3 id="references">References</h3>
+<ol>
+<li><!-- raw HTML omitted -->Proof of the existence of an optimal value function in finite MDPs<!-- raw HTML omitted --></li>
+</ol>
+
+          </div>
+
+          
+
+
+
+          
+          <div class="article-widget">
+            
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Previous</div>
+    <a href="/courses/rl-course/post2/" rel="next">RL Fundamentals and MDPs</a>
+  </div>
+  
+  
+</div>
+
+          </div>
+          
+        </div>
+
+        <div class="body-footer">
+          <p>Last updated on May 5, 2019</p>
+
+          
+<p class="edit-page">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/courses/rl-course/post3.md">
+    <i class="fas fa-pen pr-2"></i>Edit this page
+  </a>
+</p>
+
+
+
+          
+
+        </div>
+
+      </article>
+
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+
+      
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
+        
+      
+
+      
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.1/anchor.min.js" integrity="sha256-pB/deHc9CGfFpJRjC43imB29Rse8tak+5eXqntO94ck=" crossorigin="anonymous"></script>
+    <script>
+      anchors.add();
+    </script>
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.c5b98a8914247ae95edfbe976665d60f.js"></script>
+
+    
+
+
+
+
+
+
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

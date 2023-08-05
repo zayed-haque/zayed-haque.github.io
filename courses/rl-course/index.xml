@@ -1,0 +1,723 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Course Overview | Skanda Vaidyanath</title>
+    <link>https://skandavaidyanath.github.io/courses/rl-course/</link>
+      <atom:link href="https://skandavaidyanath.github.io/courses/rl-course/index.xml" rel="self" type="application/rss+xml" />
+    <description>Course Overview</description>
+    <generator>Source Themes Academic (https://sourcethemes.com/academic/)</generator><language>en-us</language><lastBuildDate>Sun, 09 Sep 2018 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>https://skandavaidyanath.github.io/img/icon-192.png</url>
+      <title>Course Overview</title>
+      <link>https://skandavaidyanath.github.io/courses/rl-course/</link>
+    </image>
+    
+    <item>
+      <title>Introduction: Why RL?</title>
+      <link>https://skandavaidyanath.github.io/courses/rl-course/post1/</link>
+      <pubDate>Sun, 05 May 2019 00:00:00 +0100</pubDate>
+      <guid>https://skandavaidyanath.github.io/courses/rl-course/post1/</guid>
+      <description>&lt;p&gt;Hi and welcome to the first post of this RL course! In this post, my aim will be to introduce the idea of RL to you and talk about the problems it solves and why it is important.&lt;/p&gt;
+&lt;p&gt;Reinforcement learning is like that little-known cousin of supervised learning and unsupervised learning. Or at least it was for the longest time. RL has actually been around a really long time and I would highly recommend reading the RL book for a more detailed account on the history of RL. But in recent times, its been gaining a lot of attention, mainly due to the conquests of &lt;a href=&#34;https://deepmind.com/blog/article/alphazero-shedding-new-light-grand-games-chess-shogi-and-go&#34;&gt;DeepMind&amp;rsquo;s AlphaZero&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;But having said that, people still don&amp;rsquo;t quite know what RL is yet and don&amp;rsquo;t know how and when to use it. So as a part of this introductory blog, I will try to answer three questions that are often asked about RL.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;What is Reinforcement Learning?&lt;/li&gt;
+&lt;li&gt;How is it different from Supervised learning or Unsupervised learning?&lt;/li&gt;
+&lt;li&gt;What problems can it solve?&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;And lets begin!&lt;/p&gt;
+&lt;h2 id=&#34;what-is-reinforcement-learning&#34;&gt;What is Reinforcement Learning?&lt;/h2&gt;
+&lt;p&gt;Reinforcement learning is a paradigm of Machine Learning (ML). The most general way to divide ML into three parts would be as Supervised learning (SL), Unsupervised learning (USL) and Reinforcement Learning. But most people only talk about SL and USL when they talk about ML.
+So my first job is to explain why the third paradigm is important and how it is different from the first two.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Reinforcement learning is an area of machine learning concerned with how software agents ought to take actions in an environment in order to maximize some notion of cumulative reward.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The above definition is taken from Wikipedia. 
+The definition speaks about &amp;ldquo;agents&amp;rdquo; taking &amp;ldquo;actions&amp;rdquo; in &amp;ldquo;environments&amp;rdquo; to maximize &amp;ldquo;rewards&amp;rdquo;. But what does all this mean? Lets break it down, but before that, here is a simpler definition.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Reinforcement learning is simply learning by trial and error.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://skandavaidyanath.github.io/img/post1_rl.png&#34; data-caption=&#34;The RL Setup. Source: Google Images&#34;&gt;
+&lt;img src=&#34;https://skandavaidyanath.github.io/img/post1_rl.png&#34; alt=&#34;&#34; &gt;&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    The RL Setup. Source: Google Images
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+&lt;p&gt;Think about how you started learning to ride a bike. You probably tried many different things (turning the handle-bar in different directions, trying to pedal backwards) and continued doing more of what worked (&amp;ldquo;worked&amp;rdquo; in this context probably means &amp;ldquo;did not fall and moved in the intended direction&amp;rdquo;) and less of what didn&amp;rsquo;t. Nobody gave you clear instructions on what to do at each step, you just tried things and they worked (or didn&amp;rsquo;t). In fact, humans gain several skills in the same fashion. Imagine you&amp;rsquo;re playing a brand new video game without reading the instructions or picking up a new sport. Humans learn several tasks by trial and error and that&amp;rsquo;s exactly what we&amp;rsquo;re trying to emulate with RL. Trying to get as close as possible to the way humans learn.&lt;/p&gt;
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://skandavaidyanath.github.io/img/post1_bicycle.jpg&#34; data-caption=&#34;Learning to ride a bike. Source: Google Images&#34;&gt;
+&lt;img src=&#34;https://skandavaidyanath.github.io/img/post1_bicycle.jpg&#34; alt=&#34;&#34; &gt;&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Learning to ride a bike. Source: Google Images
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+&lt;p&gt;With that intuition, lets take a jab at the Wikipedia definition again. The &amp;ldquo;agent&amp;rdquo; in our biker example is the person trying to learn to ride a bike. The &amp;ldquo;environment&amp;rdquo; is everything that may affect the person riding the bike &amp;ndash; so this could be the road, the traffic, the weather, etc. Remember the environment is dynamic &amp;ndash; the traffic could get heavier, the weather could get rainier, etc. So the agent has to account for the different settings of the environment. As for &amp;ldquo;actions&amp;rdquo;, these are the different decisions the agent can make &amp;ndash; for example, they could be &amp;ldquo;turn left&amp;rdquo;, &amp;ldquo;turn right&amp;rdquo;, etc. The agent must decide based on the state of the environment, what the right action to play is at a given point. And finally &amp;ldquo;rewards&amp;rdquo; is some sort of feedback we get for the series (could be singular) of actions we just took. So we would get a positive reward if we reached our destination and negative if we fell down for example. All these terms will be dealt with more formally in the next post. For now, just make sure you get the intuition.&lt;/p&gt;
+&lt;p&gt;So we have an agent that is going to try and take different possible actions in its environment (which is dynamic!) and learn the best actions under each setting of the environment in order to maximise some notion of a cumulative reward (a feedback signal). All this will get clearer as we go along but for now just remember this.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Bottomline: RL is just learning by trial and error to pick the right actions depending on the state of the environment.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;how-is-it-different-from-supervised-learning-or-unsupervised-learning&#34;&gt;How is it different from Supervised learning or Unsupervised learning?&lt;/h2&gt;
+&lt;p&gt;This is the question I get asked the most about RL. The difference between RL and USL is quite clear. In USL, there is absolutely no form of feedback or supervision whereas in RL we do get some sort of feedback in the form of a reward signal. Hence, USL is often about finding some sort of structure or patterns in data with absolutely no supervision or feedback. This is not what we&amp;rsquo;re dealing with here.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;So Reinforcement Learning is not Unsupervised learning.&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;The more pertinent question is &amp;ndash; how is it different from supervised learning? Is RL just SL with class labels given in a different manner?&lt;/p&gt;
+&lt;p&gt;Lets look at another very common example. We want to teach our computer to play Tic Tac Toe.&lt;/p&gt;
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://skandavaidyanath.github.io/img/post1_tic_tac_toe.png&#34; data-caption=&#34;Tic Tac Toe Game Tree. Source: Google Images&#34;&gt;
+&lt;img src=&#34;https://skandavaidyanath.github.io/img/post1_tic_tac_toe.png&#34; alt=&#34;&#34; &gt;&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Tic Tac Toe Game Tree. Source: Google Images
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+&lt;p&gt;Our data is in the form of several games that have been played from start to finish. If we consider this as training data for our SL model, the only labels we could possibly decipher from these games would be the final outcome &amp;ndash; the winner of the game or if it was a draw. If we are able to somehow encode the game and train a classifier on the data, this SL model would be able to predict the outcome of a game (which is not very useful) but not &lt;em&gt;how to play the game&lt;/em&gt;. Stop for a second, think about all the different potential SL solutions to this problem and convince yourself that this would be an extremely difficult (if even possible) problem to solve if we do not have supervised labels telling us what the best move is for every board position.&lt;/p&gt;
+&lt;p&gt;If we wanted to train a SL model to learn &lt;em&gt;how to play the game&lt;/em&gt;, we would need training data in the form of &lt;em&gt;the best move to play at every board position&lt;/em&gt;. But alas, we do not have such information and this is the case in most problems (think about riding a cycle or playing chess or a video game).&lt;/p&gt;
+&lt;p&gt;So how does RL solve the problem? Think of the Tic Tac Toe board and the opponent as an environment now (we can convert our series of game descriptions to such a setup) and our agent is trying to learn how to play the game. If we have enough game descriptions or if the agent can experiment by trying different moves in different board positions through &lt;em&gt;trial and error&lt;/em&gt; and observes the final outcome, then the agent can learn the best moves in the different positions! We&amp;rsquo;ll look into how exactly this is possible over the next couple of posts.&lt;/p&gt;
+&lt;p&gt;But since our aim was just to show that RL and SL are not the same, we are done here. SL requires &amp;ldquo;step-wise&amp;rdquo; (this is not a technical term and hence is in quotes, but you get the idea) labels to learn &lt;em&gt;how to do a task&lt;/em&gt;. It requires &amp;ldquo;strong&amp;rdquo; supervision. RL can do the same thing with some sort of &amp;ldquo;weak&amp;rdquo;/&amp;ldquo;distant&amp;rdquo;/&amp;ldquo;semi&amp;rdquo;-supervision.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;So Reinforcement Learning is not Supervised learning either.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;what-problems-can-it-solve&#34;&gt;What problems can it solve?&lt;/h2&gt;
+&lt;p&gt;All this sounds great but what problems can RL solve? So far we&amp;rsquo;ve spoken about riding bikes and playing chess and video games but are there any significant real-world problems RL can solve?&lt;/p&gt;
+&lt;p&gt;As it turns out there are several. RL is also commonly referred to as &lt;strong&gt;Sequential Decision Making&lt;/strong&gt; or &lt;strong&gt;Decision Making under Uncertainty&lt;/strong&gt; or learning through &lt;strong&gt;Interactions&lt;/strong&gt;. This makes it abundantly clear as to why it is not the same as SL or USL. There is no interaction or sequential decision making in SL or USL. There is a need for a paradigm that learns through interactions and not direct class labels in &amp;ldquo;uncertain&amp;rdquo; conditions. When we put it this way, we can think of several applications for RL in the real-world. I&amp;rsquo;ll talk about a few here.&lt;/p&gt;
+&lt;p&gt;
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://skandavaidyanath.github.io/img/post1_pong.jpg&#34; data-caption=&#34;Atari Games: Pong. Source: Google Images&#34;&gt;
+&lt;img src=&#34;https://skandavaidyanath.github.io/img/post1_pong.jpg&#34; alt=&#34;&#34; &gt;&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Atari Games: Pong. Source: Google Images
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://skandavaidyanath.github.io/img/post1_alphazero.jpg&#34; data-caption=&#34;AlphaZero: Chess. Source: Google Images&#34;&gt;
+&lt;img src=&#34;https://skandavaidyanath.github.io/img/post1_alphazero.jpg&#34; alt=&#34;&#34; &gt;&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    AlphaZero: Chess. Source: Google Images
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;RL gained massive popularity because of &lt;a href=&#34;https://deepmind.com/&#34;&gt;Google DeepMind&lt;/a&gt; and its success at playing Go and Chess and &lt;a href=&#34;https://arxiv.org/abs/1312.5602&#34;&gt;Atari Games&lt;/a&gt; as well but there are several other applications of RL.&lt;/p&gt;
+&lt;p&gt;RL is extremely versatile and can be used along with several other common ML areas like Computer Vision (CV) and Natural Language Processing (NLP).&lt;/p&gt;
+&lt;p&gt;The best example of using RL with CV is probably self-driving cars. With NLP, it can be used in dialogue systems. Another massive application area is in robotics and control. It can be used to train multi-agent systems, for example, a swarm of drones communicating with each other. One of my favourite applications of RL is personalized learning where an RL agent can design an optimal course for a student with the right number of tests/assignments administered at the right time to encourage maximum learning. There is similar work being done on personalized healthcare as well.&lt;/p&gt;
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://skandavaidyanath.github.io/img/post1_robotics.jpg&#34; data-caption=&#34;Robotics. Source: Google Images&#34;&gt;
+&lt;img src=&#34;https://skandavaidyanath.github.io/img/post1_robotics.jpg&#34; alt=&#34;&#34; &gt;&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Robotics. Source: Google Images
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+&lt;p&gt;And so there are a ton of different applications that leverage the power of RL. There are also other slightly different uses, for example, RL can be used to &lt;a href=&#34;https://skandavaidyanath.github.io/post/bridging-the-gaps-with-rl/&#34;&gt;overcome non-differentiable steps in deep learning&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;And with that, we&amp;rsquo;ve answered all the questions that we set out to! We get into a lot more details in the &lt;a href=&#34;https://skandavaidyanath.github.io/courses/rl-course/post2/&#34;&gt;next post&lt;/a&gt; so make sure you take a look at that as well.&lt;/p&gt;
+&lt;p&gt;Feel free to let me know if you have any feedback!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>RL Fundamentals and MDPs</title>
+      <link>https://skandavaidyanath.github.io/courses/rl-course/post2/</link>
+      <pubDate>Sun, 05 May 2019 00:00:00 +0100</pubDate>
+      <guid>https://skandavaidyanath.github.io/courses/rl-course/post2/</guid>
+      <description>&lt;p&gt;In this post, we&amp;rsquo;ll try to get into the real nitty-gritties of RL and build on the intuition that we gained from the &lt;a href=&#34;https://skandavaidyanath.github.io/courses/rl-course/post1/&#34;&gt;last article&lt;/a&gt;. So we&amp;rsquo;ll bring in some mathematical foundation and then introduce some RL parlance that we will use for the rest of this course. I&amp;rsquo;ll stick to the standard notation and jargon from the RL book.&lt;/p&gt;
+&lt;h2 id=&#34;three-challenges&#34;&gt;Three Challenges&lt;/h2&gt;
+&lt;p&gt;Before we begin with the mathematical foundations of RL, I&amp;rsquo;d like to point out three challenges in RL we need to account for if we were to come up with RL algorithms of our own. Once again, I&amp;rsquo;m going to move on to a new example so lets take chess this time.&lt;/p&gt;
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://skandavaidyanath.github.io/img/post1_alphazero.jpg&#34; data-caption=&#34;AlphaZero: Chess. Source: Google Images&#34;&gt;
+&lt;img src=&#34;https://skandavaidyanath.github.io/img/post1_alphazero.jpg&#34; alt=&#34;&#34; &gt;&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    AlphaZero: Chess. Source: Google Images
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+&lt;p&gt;So we want to teach our agent (recall what this means from the previous post) how to play the game of chess. Lets assume we have some sort of reward function in place where we get some small positive rewards for capturing a piece and small negative rewards for losing a piece depending on the importance of the piece (so losing a queen would lead to a negative reward of larger magnitude than losing a pawn). We also have some large positive final reward for winning the game and a large positive negative reward for losing. If you&amp;rsquo;re wondering whether just this large final reward is a sufficient reward function on its own, you&amp;rsquo;re probably right and it probably is, but lets stick to this for the sake of illustration.&lt;/p&gt;
+&lt;p&gt;Now assume we have an RL algorithm that can look at several games of chess and the rewards and learn to play chess on its own. What would this algorithm need to account for? We spoke about trial and error being the basis of any RL algorithm in the previous post that is exactly what our algorithm would do as well. It starts playing random moves and when it plays a good move (positive reward), it remembers to play that move the next time it is in a similar situation. This seems fine on the face of it, but there is an issue. Maybe the algorithm found a good move to play at a given position, &lt;em&gt;but what if there was a better move?&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;We need some way for the algorithm to account for the possibility of there being a better move than the one it has found already. So when we train our agent we need to make sure the agent doesn&amp;rsquo;t greedily play the best move it knows all the time but also plays some different moves, hoping that they may be better than the one it already found. This is called the &lt;em&gt;exploration-exploitation tradeoff&lt;/em&gt; in RL. Usually, RL algorithms tend to explore i.e. play many random moves initially and when the agent is more sure about the best moves under different circumstances, it starts exploiting that knowledge. We will revisit this problem in the next post with another example.&lt;/p&gt;
+&lt;p&gt;Lets move on to the next challenge that our RL algorithm will have to account for. Lets say our RL algorithm is learning from a game of chess again where the player sacrifices the queen but goes on to win the game. The RL agent immediately registers a negative reward for the loss of the queen but the large positive reward for winning the game only comes much later. But it is entirely possible that the very queen sacrifice that the RL agent probably classified as a bad move, was the reason for the player winning the game. So it is possible that a move seems like a &amp;ldquo;bad&amp;rdquo; one in the short term but in the long term, could be a very &amp;ldquo;good&amp;rdquo; move. How do we account for this in our algorithm? This is the concept of &lt;em&gt;delayed rewards&lt;/em&gt; and we will deal with a simple yet elegant solution for this as well as we go through this post. We will look at another example for this as well in the next post.&lt;/p&gt;
+&lt;p&gt;And finally our RL algorithm should learn to generalize i.e. it should be able to efficiently learn from the data it collects. One of the major drawbacks in RL is that it requires a lot of data to learn so &lt;em&gt;generalization&lt;/em&gt; is important for RL algorithms.&lt;/p&gt;
+&lt;p&gt;Note that RL is based on the &lt;em&gt;reward hypothesis&lt;/em&gt; that states that:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;All goals can be described by the maximisation of expected cumulative reward&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Think about whether you agree with this statement.&lt;/p&gt;
+&lt;p&gt;With that background, lets talk about how RL problems are modeled and get into some math.&lt;/p&gt;
+&lt;h2 id=&#34;markov-decision-processes&#34;&gt;Markov Decision Processes&lt;/h2&gt;
+&lt;blockquote&gt;
+&lt;p&gt;The future is independent of the past, given the present&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://skandavaidyanath.github.io/img/post2_mdp_example.jpg&#34; data-caption=&#34;A Markov Decision Process. Source: here&#34;&gt;
+&lt;img src=&#34;https://skandavaidyanath.github.io/img/post2_mdp_example.jpg&#34; alt=&#34;&#34; &gt;&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    A Markov Decision Process. Source: &lt;a href=&#34;https://randomant.net/reinforcement-learning-concepts/&#34;&gt;here&lt;/a&gt;
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://skandavaidyanath.github.io/img/post2_rl_with_not.jpg&#34; data-caption=&#34;The RL Framework (with some additional details). Source: Google Images&#34;&gt;
+&lt;img src=&#34;https://skandavaidyanath.github.io/img/post2_rl_with_not.jpg&#34; alt=&#34;&#34; &gt;&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    The RL Framework (with some additional details). Source: Google Images
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Almost all RL problems can be modeled as a Markov Decision Process (MDP). So what is an MDP? An MDP is a mathematical model that we will be seeing a lot over this course. Most of our RL environments, will be MDPs. An MDP can be defined as a five tuple:
+$$\langle \mathcal{S}, \mathcal{A}, \mathcal{P}, \mathcal{R}, \gamma \rangle$$&lt;/p&gt;
+&lt;p&gt;Lets take a closer look at what all of this means. Note that in this section, I do not follow the notation in the RL book and follow the notation &lt;a href=&#34;https://ai.stanford.edu/~ang/papers/icml00-irl.pdf&#34;&gt;here&lt;/a&gt; which is quite commonly followed.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;S&lt;/em&gt; : This is the set of states of the MDP. In an RL setting, this would correspond to different settings of the environment i.e. each setting of the environment is a state in the MDP. In the previous post, we spoke about how RL was all about choosing the right actions at the right times i.e. depending on the state of the environment. This is the state we were talking about. A state in chess or tic-tac-toe could be the board positions or while riding a bike could be some combination of the pertinent variables like the angle of the bike with thr ground, the wind speed, etc. The &lt;em&gt;S&lt;/em&gt; variable represents the set of all unique states in the MDP.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;A&lt;/em&gt; : This is the set of all actions of the MDP. We already spoke about actions briefly. Actions describe the possible moves in a game of chess or tic-tac-toe or different arrow keys or buttons in a video game, etc. It represents the different options the agent has and can play at a given point in time. &lt;em&gt;A&lt;/em&gt; represents the set of all unique actions available to the agent.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;It is worth mentioning that both &lt;em&gt;S&lt;/em&gt; and &lt;em&gt;A&lt;/em&gt; can be finite or infinite sets. Both can also be continuous spaces or discrete spaces, depending on the variables in the state space or the nature of actions. For example, if we have a variable taking real numbered values in the state space, the state space is automatically continuous (and infinite). If our actions are in the form of degree of turning a steering wheel, once again, continuous and infinite action space. A &lt;em&gt;finite MDP&lt;/em&gt; has both finite &lt;em&gt;S&lt;/em&gt; and finite &lt;em&gt;A&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Before we move on to the other symbols, lets get some things clear. Here is another more detailed MDP for your reference.&lt;/p&gt;
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://skandavaidyanath.github.io/img/post2_mdp.png&#34; data-caption=&#34;Another MDP. Source: Google Images&#34;&gt;
+&lt;img src=&#34;https://skandavaidyanath.github.io/img/post2_mdp.png&#34; alt=&#34;&#34; &gt;&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Another MDP. Source: Google Images
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+&lt;p&gt;Some of the states of the MDP are designated as start states or initial states and end states or terminal states. An &lt;em&gt;episode&lt;/em&gt; in RL is a sequence of state-action pairs that take the agent from a start state to a terminal state. So the agent starts from one of the intial states, plays an action, goes to the next state and so on until it hits a terminal state and the episode ends. Assume for now that there is such an end i.e. every episode does end after some unknown, finite time. This is a property of &lt;em&gt;finite horizon MDPs&lt;/em&gt; which is what we will stick to in this course.&lt;/p&gt;
+&lt;p&gt;Now lets take a look at this MDP in the diagram above. Assume &lt;em&gt;S&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;0&lt;!-- raw HTML omitted --&gt; is your initial state. Notice that &lt;em&gt;a&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;0&lt;!-- raw HTML omitted --&gt; from &lt;em&gt;S&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;0&lt;!-- raw HTML omitted --&gt; has two arrows, one going into &lt;em&gt;S&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;0&lt;!-- raw HTML omitted --&gt; again and another going into &lt;em&gt;S&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;2&lt;!-- raw HTML omitted --&gt;. The numbers on the arrows indicate 0.5 and 0.5 respectively. This means that if an agent plays the action &lt;em&gt;a&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;0&lt;!-- raw HTML omitted --&gt; from &lt;em&gt;S&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;0&lt;!-- raw HTML omitted --&gt;, it has a 0.5 probability that it ends up back in &lt;em&gt;S&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;0&lt;!-- raw HTML omitted --&gt; and a 0.5 probability that it ends up in &lt;em&gt;S&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;2&lt;!-- raw HTML omitted --&gt;. And similarly we have arrows going all over the diagram. Also notice the wiggly arrows &amp;ndash; they&amp;rsquo;re rewards.&lt;/p&gt;
+&lt;p&gt;Notationally, we index the sequence of state-action pairs in an episode with a time variable &lt;em&gt;t&lt;/em&gt; so we say an agent plays action &lt;em&gt;a&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;t&lt;!-- raw HTML omitted --&gt; from state &lt;em&gt;s&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;t&lt;!-- raw HTML omitted --&gt; and gets reward &lt;em&gt;r&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;t+1&lt;!-- raw HTML omitted --&gt; for doing so (the reward can be 0). Here, &lt;em&gt;t&lt;/em&gt; starts from 0 and we represent the terminal time-step as &lt;em&gt;T&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Another crucial thing to note is that actions in an MDP have to be instantaneous in nature. That means you take action &lt;em&gt;a&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;t&lt;!-- raw HTML omitted --&gt; from state &lt;em&gt;s&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;t&lt;!-- raw HTML omitted --&gt; and end up in state &lt;em&gt;s&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;t+1&lt;!-- raw HTML omitted --&gt; immediately. There are several actions in real-world problems that may not be instantaneous but we&amp;rsquo;ll deal with them later. For now, assume your actions are instantaneous.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;em&gt;P&lt;/em&gt; : Now P is the probability function defined as &lt;em&gt;P&lt;/em&gt;(s&lt;!-- raw HTML omitted --&gt;&#39;&lt;!-- raw HTML omitted --&gt;| s, a) which is read as the probability of moving to &amp;ldquo;state s&#39;&amp;rdquo; from &amp;ldquo;state s&amp;rdquo; if the agent plays &amp;ldquo;action a&amp;rdquo;. So for example, &lt;em&gt;P&lt;/em&gt;(&lt;em&gt;S&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;2&lt;!-- raw HTML omitted --&gt;|&lt;em&gt;S&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;0&lt;!-- raw HTML omitted --&gt;,&lt;em&gt;a&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;0&lt;!-- raw HTML omitted --&gt;) = 0.5. This is also called the &lt;em&gt;transition function&lt;/em&gt;.&lt;/li&gt;
+&lt;li&gt;&lt;em&gt;R&lt;/em&gt; : This is the &lt;em&gt;reward function&lt;/em&gt; or &lt;em&gt;reinforcement function&lt;/em&gt; and is defined as &lt;em&gt;R&lt;/em&gt;(s&lt;!-- raw HTML omitted --&gt;&#39;&lt;!-- raw HTML omitted --&gt;| s, a) which is the reward the agent gets for moving to &amp;ldquo;state s&#39;&amp;rdquo; from &amp;ldquo;state s&amp;rdquo; if the agent plays &amp;ldquo;action a&amp;rdquo;. So for example, &lt;em&gt;R&lt;/em&gt;(&lt;em&gt;S&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;0&lt;!-- raw HTML omitted --&gt;|&lt;em&gt;S&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;1&lt;!-- raw HTML omitted --&gt;,&lt;em&gt;a&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;0&lt;!-- raw HTML omitted --&gt;) = +5. However, the answer may not be as simple as a single number and the reward could be sampled from a probability distribution i.e. &lt;em&gt;R&lt;/em&gt;(s&lt;!-- raw HTML omitted --&gt;&#39;&lt;!-- raw HTML omitted --&gt;| s, a) is a probability distribution that we will try to estimate by interaction with the environment. There are some other forms of reward functions like &lt;em&gt;R&lt;/em&gt;(s,a) or even just &lt;em&gt;R&lt;/em&gt;(s) as well. Note that rewards are always scalars because they are easier to optimize. They are also usually finite.&lt;/li&gt;
+&lt;li&gt;$\gamma$ : We spoke about the concept of delayed rewards earlier in the post and we wanted a way to accound for delayed effects of actions. This is where $\gamma$ helps. We define the &lt;em&gt;returns&lt;/em&gt; of an action from a given state as the sum of the &lt;em&gt;discounted rewards&lt;/em&gt; we receive from that state for playing that action. If we started from the state &lt;em&gt;s&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;0&lt;!-- raw HTML omitted --&gt;, the returns would be defined as &lt;em&gt;r&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;1&lt;!-- raw HTML omitted --&gt; + $\gamma$ &lt;em&gt;r&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;2&lt;!-- raw HTML omitted --&gt; + $\gamma$&lt;!-- raw HTML omitted --&gt;2&lt;!-- raw HTML omitted --&gt; &lt;em&gt;r&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;3&lt;!-- raw HTML omitted --&gt; + &amp;hellip; $\gamma$ &lt;!-- raw HTML omitted --&gt;&lt;em&gt;T-1&lt;/em&gt;&lt;!-- raw HTML omitted --&gt; &lt;em&gt;r&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;&lt;em&gt;T&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;. We use the word &amp;ldquo;discounted&amp;rdquo; because $\gamma$ is usually a number between 0 and 1 and with the increasing powers, we give more weight to the immediate rewards than the delayed rewards. Hence, $\gamma$ is also called the discounting factor. The symbol we use for returns from timestep &lt;em&gt;t&lt;/em&gt; is usually &lt;em&gt;G&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;&lt;em&gt;t&lt;/em&gt;&lt;!-- raw HTML omitted --&gt; although some people like using &lt;em&gt;R&lt;/em&gt; as well (&lt;em&gt;r&lt;/em&gt; for reward and &lt;em&gt;R&lt;/em&gt; for returns). We will stick to the former notation. Now going back to the queen sacrifice example, if we were to consider the returns in our algorithm instead of just the immediate reward, we will be able to account for the delayed positive effect and not just the immediate negative effect.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;But with all of that information, we still haven&amp;rsquo;t covered that blockquote at the start of this section. No, that wasn&amp;rsquo;t a quote from Avengers: Endgame and it is the most important takeaway from this post. So what does it mean? Mathematically, it means this:&lt;/p&gt;
+&lt;p&gt;$$P(s_{t+1}|s_t,a) = P(s_{t+1}|s_t,s_{t-1},s_{t-2},s_{t-3},&amp;hellip;,a)$$&lt;/p&gt;
+&lt;p&gt;But what does that mean intuitively? It means the probability of going to state &lt;em&gt;s&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;t+1&lt;!-- raw HTML omitted --&gt; from state &lt;em&gt;s&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;t&lt;!-- raw HTML omitted --&gt; under the action &lt;em&gt;a&lt;/em&gt; is independent of how we got to state &lt;em&gt;s&lt;/em&gt;&lt;!-- raw HTML omitted --&gt;t&lt;!-- raw HTML omitted --&gt; in the first place. If you&amp;rsquo;re thinking this isn&amp;rsquo;t very realistic, you&amp;rsquo;re right but this type of modeling works in most cases and is called &lt;em&gt;The Markov Property&lt;/em&gt;. The future is independent of the past, given the present i.e. the action from the current state only depends on the current state and not how we got to this state in the first place.&lt;/p&gt;
+&lt;p&gt;We make another assumption of stationarity which means:&lt;/p&gt;
+&lt;p&gt;$$P(s_{t+1}=s&#39;,r_{t+1}=r|s_{t}=s,a_{t}=a) = P(s&#39;,r|s,a)$$&lt;/p&gt;
+&lt;p&gt;This means that the timestep variable doesn&amp;rsquo;t matter &amp;ndash; no matter at what point we are in the trajectory, given the state &lt;em&gt;s&lt;/em&gt; and and action &lt;em&gt;a&lt;/em&gt;, we always end up sampling the next state &lt;em&gt;s&#39;&lt;/em&gt; and the reward &lt;em&gt;r&lt;/em&gt; from the same distribution. This is a property of &lt;em&gt;stationary&lt;/em&gt; MDPs.&lt;/p&gt;
+&lt;p&gt;And with that, we&amp;rsquo;ve covered MDPs and how to model RL problems. With this background, I also recommend reading &lt;a href=&#34;https://skandavaidyanath.github.io/post/modeling-rl-problems/&#34;&gt;this&lt;/a&gt;. But with that definition, we still haven&amp;rsquo;t accounted for the exploration-exploitation tradeoff. So in the &lt;a href=&#34;https://skandavaidyanath.github.io/courses/rl-course/post3/&#34;&gt;next post&lt;/a&gt;, we&amp;rsquo;ll introduce a few more symbols and definitions before we get cracking with our very first RL algorithm!&lt;/p&gt;
+&lt;p&gt;Once again, let me know if you have any feedback or suggestions.&lt;/p&gt;
+&lt;h3 id=&#34;references&#34;&gt;References&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&#34;https://lilianweng.github.io/lil-log/2018/02/19/a-long-peek-into-reinforcement-learning.html&#34;&gt;A (Long) Peek into Reinforcement Learning by Lilian Weng&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;http://www0.cs.ucl.ac.uk/staff/d.silver/web/Teaching.html&#34;&gt;David Silver&amp;rsquo;s RL Course at UCL&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;For MDP notation, &lt;a href=&#34;https://ai.stanford.edu/~ang/papers/icml00-irl.pdf&#34;&gt;Algorithms for Inverse Reinforcement Learning&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Policies, Value Functions and the Bellman Equation</title>
+      <link>https://skandavaidyanath.github.io/courses/rl-course/post3/</link>
+      <pubDate>Sun, 05 May 2019 00:00:00 +0100</pubDate>
+      <guid>https://skandavaidyanath.github.io/courses/rl-course/post3/</guid>
+      <description>&lt;p&gt;In the last post, we discussed the three major challenges RL algorithms need to tackle and then went on to Markov Decision Processes (MDPs). We&amp;rsquo;ll start this post with a quick recap of some important concepts from the last post and then move on to new ideas.&lt;/p&gt;
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://skandavaidyanath.github.io/img/post2_mdp.png&#34; data-caption=&#34;An MDP. Source: Google Images&#34;&gt;
+&lt;img src=&#34;https://skandavaidyanath.github.io/img/post2_mdp.png&#34; alt=&#34;&#34; &gt;&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    An MDP. Source: Google Images
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+&lt;p&gt;An MDP formally describes the environment for RL when the environment is fully observable i.e. we know all the values of the relevant state variables. In other words, the current state completely characterises the process. Almost all RL problems are formulated as MDPs. This is the same MDP we saw in the previous post. We already discussed the different components of an MDP i.e. the states, the actions, the transition function, reward function and the discount factor $\gamma$. If you need to refresh your memory about any of these, refer back to the previous post before you go ahead.
+Here is the Markov property once again for your reference. The future is independent of the past given the present and the state captures all relevant information from the history. This means once we know what state we are in, we don&amp;rsquo;t care how we got to the state in the first place i.e. the state is a sufficient statistic of the future.&lt;/p&gt;
+&lt;p&gt;$$P(s_{t+1}|s_t,a) = P(s_{t+1}|s_t,s_{t-1},s_{t-2},s_{t-3},&amp;hellip;,a)$$&lt;/p&gt;
+&lt;h2 id=&#34;more-on-delayed-rewards&#34;&gt;More on Delayed Rewards&lt;/h2&gt;
+&lt;p&gt;Lets quickly recap the idea of delayed rewards once again. Look at the MDP below (and please ignore all religious connotations that might be implied). Clearly in the MDP below, from earth, the right move is to go to Heaven since you get a reward of +1 in perpetuity even though you get a negative reward to make the transition in the first place. Although the transition to hell initially looks like a good move, you get a -1 in perpetuity and hence doesn&amp;rsquo;t work well in the long term.&lt;/p&gt;
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://skandavaidyanath.github.io/img/post3_heaven_hell_mdp.PNG&#34; data-caption=&#34;Accounting for delayed rewards&#34;&gt;
+&lt;img src=&#34;https://skandavaidyanath.github.io/img/post3_heaven_hell_mdp.PNG&#34; alt=&#34;&#34; &gt;&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Accounting for delayed rewards
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+&lt;p&gt;Although this is not a finite horizon MDP (recall what this means from the last post), the idea is that we want to account not just for immediate gains but long term gains as well.
+We already saw how the discount factor and returns allow us to account for this. In fact a $\gamma$ close to 0 leads to &amp;ldquo;myopic&amp;rdquo; or &amp;ldquo;short-sighted&amp;rdquo; evaluation and a $\gamma$ close to 1 leads to &amp;ldquo;far-sighted&amp;rdquo; evaluation.
+We often pick a value in between 0 and 1 but closer to 1.
+We will revisit the returns definition later in this post.&lt;/p&gt;
+&lt;h2 id=&#34;more-on-the-explore-exploit-dilemma&#34;&gt;More on the Explore-Exploit dilemma&lt;/h2&gt;
+&lt;p&gt;Lets talk about the exploration-exploitation dilemma we referred to in the last post as well. Look at the figure given below.&lt;/p&gt;
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://skandavaidyanath.github.io/img/post3_explore_exploit.PNG&#34; data-caption=&#34;Exploration vs Exploitation. Source: Lecture 11 of this&#34;&gt;
+&lt;img src=&#34;https://skandavaidyanath.github.io/img/post3_explore_exploit.PNG&#34; alt=&#34;&#34; &gt;&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Exploration vs Exploitation. Source: Lecture 11 of &lt;a href=&#34;http://ai.berkeley.edu/lecture_slides.html&#34;&gt;this&lt;/a&gt;
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+&lt;p&gt;The exploration vs exploitation dilemma exists in our everyday lives as well. Imagine your favorite restaurant is right around the corner and you&amp;rsquo;ve been there plenty of times. If you go there every day, you would be confident of what you&amp;rsquo;ll get, but you don&amp;rsquo;t know what you&amp;rsquo;re possibly missing. If you tried different places, you could occasionally be visiting a terrible place but you could also find a new place that is better than this one. So it makes sense to explore and try new places but once you have a good idea pf what&amp;rsquo;s in the area, you can start exploiting and go to your favourite place.
+This is exactly what we want our agents to do as well in RL. We want them to explore (randomly or based on some strategy) intially and when its sure of the best actions from each state, it can exploit that knowledge to gain high rewards.&lt;/p&gt;
+&lt;h2 id=&#34;more-jargon-and-symbols&#34;&gt;More Jargon and Symbols&lt;/h2&gt;
+&lt;p&gt;Now that we&amp;rsquo;re done with that recap, lets get on to some new material. This is the most important section of this post and perhaps the entire series so make sure you understand exactly what&amp;rsquo;s going on in this section.&lt;/p&gt;
+&lt;h4 id=&#34;returns&#34;&gt;Returns&lt;/h4&gt;
+&lt;p&gt;We already discussed what returns are in the previous post, but here is the formal expression&lt;/p&gt;
+&lt;p&gt;$$G_t = r_{t+1}+\gamma r_{t+2}+&amp;hellip;r_{T} = \sum_{k=t}^{T-1} \gamma^{k}r_{k+1}$$&lt;/p&gt;
+&lt;p&gt;We end the episode at the timestep &lt;em&gt;T&lt;/em&gt; because we assume a finite horizon MDP. Remember that &lt;em&gt;T&lt;/em&gt; is a random variable &amp;ndash; for example when we play tic-tact-toe, the game could end in a different number of moves each time. Each of the independent $r_{k}$ terms are also random variables and hence, $G_{t}$ is also a random variable. Further, since each reward term is usually finite, the returns does not blow up to infinity.
+As we have already discussed, the discount factor is a number between 0 and 1 and often close to 1 and is chosen according to the problem at hand. Also recall that $r_{t+1}$ is the reward received by performing action $a_{t}$ at state $s_{t}$ ; $r_{t+1} = R(s_{t}, a_{t})$ where &lt;em&gt;R&lt;/em&gt; is the reward function.
+So this means that $G_{t}$ is the returns accumulated from the state $s_{t}$. When we try to come up with RL algorithms we want to try and optimise $G_{t}$ at all points in the trajectory.&lt;/p&gt;
+&lt;h4 id=&#34;policy&#34;&gt;Policy&lt;/h4&gt;
+&lt;p&gt;$$\pi_t(a|s) = P(a_t=a|s_t=s)$$&lt;/p&gt;
+&lt;p&gt;The policy is a mapping from states to actions or action distributions. The above eqation reads as the probability of taking an action &lt;em&gt;a&lt;/em&gt; at time &lt;em&gt;t&lt;/em&gt; given that the state at time &lt;em&gt;t&lt;/em&gt; was &lt;em&gt;s&lt;/em&gt;.
+A &lt;em&gt;stationary policy&lt;/em&gt; is time-independent which means we can omit the timestep variable &lt;em&gt;t&lt;/em&gt;. No matter at what point we are in the trajectory, under the policy, if we are at state &lt;em&gt;s&lt;/em&gt;, then the action we take (or the probability distribution over the actions we can take) is the same. So unless we are specifically talking about non-stationary policies, we omit the &lt;em&gt;t&lt;/em&gt; notation.
+Another important distinction is between &lt;em&gt;stochastic&lt;/em&gt; and &lt;em&gt;deterministic&lt;/em&gt; policies. A deterministic policy is a mapping $\pi: S \rightarrow A$ which is essentially a function that maps each state to a single action. A stochastic policy on the other hand maps each state to a probability distribution over all the actions. So a deterministic policy can be thought of as a stochstic policy where only the probability of one of the actions is non-zero.&lt;br&gt;
+In all RL problems, we want to learn the policy of the problem and we do this by either trying to learn the policy directly or by learning the policy through the following functions.&lt;/p&gt;
+&lt;h4 id=&#34;value-function&#34;&gt;Value function&lt;/h4&gt;
+&lt;p&gt;$$V^{\pi}(s) = E_{\pi}(G_{t}|s_{t}=s)$$&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;V&lt;/em&gt; is the value function of the state associated with the policy $\pi$. It is the expectation of the returns from the state with respect to the policy $\pi$. Note that $G_{t}$ itself depends on $\pi$ as the next reward depends on $\pi$.
+Since the &lt;em&gt;V&lt;/em&gt; function is the expectation of the returns from the state, it tells us how good a state is i.e. what is the expected sum of rewards we can accumulate from a given state under the current policy. So it is a measure of &amp;ldquo;goodness&amp;rdquo; of a state.&lt;/p&gt;
+&lt;h4 id=&#34;q-function&#34;&gt;Q function&lt;/h4&gt;
+&lt;p&gt;$$Q^{\pi}(s,a) = E_{\pi}(G_{t}|s_{t}=s, a_{t}=a)$$&lt;/p&gt;
+&lt;p&gt;This is the Q-function and it is almost the same as the value function, except that here, the first action you take from state &lt;em&gt;s&lt;/em&gt; is always &lt;em&gt;a&lt;/em&gt; and then you follow the policy $\pi$ from then on.
+Like the value function, the Q-function tells us not only how good a state is but also how good it is to pick each action from the state. So if $Q^{\pi}(s,a1)$ is greater than $Q^{\pi}(s,a2)$ then it is better to choose action &lt;em&gt;a1&lt;/em&gt; versus action &lt;em&gt;a2&lt;/em&gt; in state &lt;em&gt;s&lt;/em&gt; &lt;em&gt;under the given policy&lt;/em&gt;. So it tells us the &amp;ldquo;goodness&amp;rdquo; of each action in the state.
+The value function and the Q-function are crucial for several RL algorithms that we will be seeing over the next few posts.&lt;/p&gt;
+&lt;h2 id=&#34;the-bellman-equation&#34;&gt;The Bellman Equation&lt;/h2&gt;
+&lt;p&gt;If we were able to find the &lt;em&gt;optimal&lt;/em&gt; value function of each state in the MDP or the Q-function of each state-action pair, then we have solved the RL problem. We will define what &amp;ldquo;optimal&amp;rdquo; means in the next section but for now, just understand that it means &amp;ldquo;the best in terms of collecting maximum rewards&amp;rdquo;. Because at each state, we keep moving to the next potential state with the highest value function (or the state with the potential to collect maximum returns). Or in terms of Q-functions, from each state, we play the action with the highest Q-function value from that state. So we&amp;rsquo;re being greedy with our choices and eventually we keep moving across states in the MDP in this manner until the episode ends. Since we move across states with the highest value function, we collect maximum returns along the way (by virtue of the definition of value functions and a similar argument is true for Q-functions).&lt;/p&gt;
+&lt;p&gt;But by doing this, we&amp;rsquo;re also learning a mapping from states to actions i.e. a policy. So if we have the estimates of the &lt;em&gt;optimal&lt;/em&gt; value functions, we can estimate the &lt;em&gt;optimal&lt;/em&gt; policy. This can be tricky to understand because we estimate the value functions using a policy and then we extract a policy by being greedy over the value function. But more on this later.&lt;/p&gt;
+&lt;p&gt;So if our estimates of the value functions and Q-functions are optimal, we will be gaining the maximum possible reward in the MDP and would have solved the RL problem. But how do we find the optimal Q-function values or value function values? Remember &lt;em&gt;Q&lt;/em&gt; and &lt;em&gt;V&lt;/em&gt; aren&amp;rsquo;t necessarily the optimal values, they are just the values under some policy $\pi$ (which may not be the optimal policy).&lt;/p&gt;
+&lt;p&gt;All of this probably seems confusing now but will be much clearer with the math in the images below and in the next section when we introduce some more simple equations. For now, it is important to understand the importance of trying to learn these &amp;ldquo;optimal&amp;rdquo; value functions and Q-functions.&lt;/p&gt;
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://skandavaidyanath.github.io/img/post3_bellman_expectation_1.PNG&#34; data-caption=&#34;Bellman Expectation Equations (1). THIS IS VERY IMPORTANT!&#34;&gt;
+&lt;img src=&#34;https://skandavaidyanath.github.io/img/post3_bellman_expectation_1.PNG&#34; alt=&#34;&#34; &gt;&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Bellman Expectation Equations (1). THIS IS VERY IMPORTANT!
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://skandavaidyanath.github.io/img/post3_bellman_expectation_2.PNG&#34; data-caption=&#34;Bellman Expectation Equations (2). THIS IS VERY IMPORTANT!&#34;&gt;
+&lt;img src=&#34;https://skandavaidyanath.github.io/img/post3_bellman_expectation_2.PNG&#34; alt=&#34;&#34; &gt;&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Bellman Expectation Equations (2). THIS IS VERY IMPORTANT!
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+&lt;p&gt;Note that the Bellman Expectation Equations form a system of equations &amp;ndash; one equation for every state. There are as many equations as there are number of states. The variables are $V^{\pi}(s)$ for all &lt;em&gt;s&lt;/em&gt;. 
+So we have &lt;em&gt;n&lt;/em&gt; equations for &lt;em&gt;n&lt;/em&gt; states and this system of equations will always have a unique solution because the transition matrix is a &lt;a href=&#34;https://en.wikipedia.org/wiki/Stochastic_matrix&#34;&gt;stochastic matrix&lt;/a&gt;.
+The equations are linear and they are solvable.&lt;/p&gt;
+&lt;h2 id=&#34;optimality-equations&#34;&gt;Optimality Equations&lt;/h2&gt;
+&lt;p&gt;The aim of RL is to learn an optimal policy i.e. an optimal mapping from states to actions that can allow the agent to accumulate maximum rewards as it goes on a trajectory (governed by this policy) through the MDP. We want a $\pi$ such that for no other $\pi$ can we get better expected returns.&lt;/p&gt;
+&lt;p&gt;$\pi^{*} = \underset{\pi}{\operatorname{argmax}} E_{\pi}[G_{t}|s_{t}=s] \forall s$&lt;/p&gt;
+&lt;p&gt;And this can be written as:&lt;/p&gt;
+&lt;p&gt;$\pi^{*} = \underset{\pi}{\operatorname{argmax}} V^{\pi}(s) \forall s$&lt;/p&gt;
+&lt;p&gt;Here, $\pi^{*}$ is the optimal policy. The $\forall s$ tells us that this is true at any starting state or even any state in the trajectory. Note that there may be more than one optimal policy and in that case, we will take any one of them.
+However, &lt;em&gt;even though there are several possible optimal policies, there is only one possible setting for the optimal value functions&lt;/em&gt;, i.e. there may be several optimal $\pi^{*}$ but there can be only one optimal $V^{\pi^{*}}$. Think about this for a second and convince yourself that this is in fact true.&lt;/p&gt;
+&lt;p&gt;$V^{\pi^{*}} = \underset{\pi}{\operatorname{argmax}} V^{\pi}(s) \forall s = V^{*}$&lt;/p&gt;
+&lt;p&gt;$V^{*}$ is the optimal value function. The existence of such an optimal value function and hence an optimal policy that is able to reach the maximum value function &lt;em&gt;for all states&lt;/em&gt; has been proven in finite MDPs (it gets trickier in infinite MDPs but still holds for some settings). The proof is quite intricate but I have attached some notes from this &lt;a href=&#34;https://nptel.ac.in/courses/106106143/&#34;&gt;NPTEL course&lt;/a&gt; in the reference section for the interested reader.&lt;/p&gt;
+&lt;p&gt;The math in the following images talk about the Bellman Optimality Equations. Once again, this is very important for the rest of the course.&lt;/p&gt;
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://skandavaidyanath.github.io/img/post3_bellman_optimality_1.PNG&#34; data-caption=&#34;Bellman Optimality Equations (1). THIS IS VERY IMPORTANT!&#34;&gt;
+&lt;img src=&#34;https://skandavaidyanath.github.io/img/post3_bellman_optimality_1.PNG&#34; alt=&#34;&#34; &gt;&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Bellman Optimality Equations (1). THIS IS VERY IMPORTANT!
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+&lt;figure&gt;
+
+
+  &lt;a data-fancybox=&#34;&#34; href=&#34;https://skandavaidyanath.github.io/img/post3_bellman_optimality_2.PNG&#34; data-caption=&#34;Bellman Optimality Equations (2). THIS IS VERY IMPORTANT!&#34;&gt;
+&lt;img src=&#34;https://skandavaidyanath.github.io/img/post3_bellman_optimality_2.PNG&#34; alt=&#34;&#34; &gt;&lt;/a&gt;
+
+
+  
+  
+  &lt;figcaption&gt;
+    Bellman Optimality Equations (2). THIS IS VERY IMPORTANT!
+  &lt;/figcaption&gt;
+
+
+&lt;/figure&gt;
+
+&lt;p&gt;Now if we could solve the Bellman Optimality Equations, we would be done but unfortunately because of the &lt;em&gt;max&lt;/em&gt; operator, the equations are non-linear and cannot be solved easily.
+So we need to think about how we can solve this problem.&lt;/p&gt;
+&lt;p&gt;Phew! That was a long post with a lot of information to take in but it is extremely important that you understand the ideas in this post clearly. In the next post, we&amp;rsquo;ll move on to our first RL algorithm so make sure you check it out!&lt;/p&gt;
+&lt;p&gt;Let me know if you have any feedback or suggestions.&lt;/p&gt;
+&lt;h3 id=&#34;references&#34;&gt;References&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;!-- raw HTML omitted --&gt;Proof of the existence of an optimal value function in finite MDPs&lt;!-- raw HTML omitted --&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

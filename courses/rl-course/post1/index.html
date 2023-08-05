@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Source Themes Academic 4.5.0">
+
+  
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Skanda Vaidyanath">
+
+  
+  
+  
+    
+  
+  <meta name="description" content="Hi and welcome to the first post of this RL course! In this post, my aim will be to introduce the idea of RL to you and talk about the problems it solves and why it is important.
+Reinforcement learning is like that little-known cousin of supervised learning and unsupervised learning. Or at least it was for the longest time. RL has actually been around a really long time and I would highly recommend reading the RL book for a more detailed account on the history of RL.">
+
+  
+  <link rel="alternate" hreflang="en-us" href="https://skandavaidyanath.github.io/courses/rl-course/post1/">
+
+  
+
+
+  
+  
+  
+  <meta name="theme-color" content="#2962ff">
+  
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.8.6/css/academicons.min.css" integrity="sha256-uFVgMKfistnJAfoCUQigIl+JfUaP47GrRKjf6CTPVmw=" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.0/css/all.css" integrity="sha384-aOkxzJ5uQz7WBObEZcHvV5JvRW3TUc2rNPA7pe3AwnsUohiw1Vj2Rgx2KSOkF5+h" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" integrity="sha256-ygkqlh3CYSUri3LhQxzdcm0n1EQvH2Y+U5S2idbLtxs=" crossorigin="anonymous">
+
+    
+    
+    
+      
+    
+    
+      
+      
+        
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css" crossorigin="anonymous" title="hl-light">
+          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/dracula.min.css" crossorigin="anonymous" title="hl-dark" disabled>
+        
+      
+    
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin="anonymous">
+    
+
+    
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700%7CRoboto:400,400italic,700%7CRoboto+Mono&display=swap">
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/css/academic.min.8565976d7831ba0a0daf18ae5d4ff0e8.css">
+
+  
+
+  
+
+
+
+
+  
+
+
+  
+
+  <link rel="manifest" href="/index.webmanifest">
+  <link rel="icon" type="image/png" href="/img/icon-32.png">
+  <link rel="apple-touch-icon" type="image/png" href="/img/icon-192.png">
+
+  <link rel="canonical" href="https://skandavaidyanath.github.io/courses/rl-course/post1/">
+
+  
+  
+  
+  
+    
+    
+  
+  
+  <meta property="twitter:card" content="summary">
+  
+  <meta property="og:site_name" content="Skanda Vaidyanath">
+  <meta property="og:url" content="https://skandavaidyanath.github.io/courses/rl-course/post1/">
+  <meta property="og:title" content="Introduction: Why RL? | Skanda Vaidyanath">
+  <meta property="og:description" content="Hi and welcome to the first post of this RL course! In this post, my aim will be to introduce the idea of RL to you and talk about the problems it solves and why it is important.
+Reinforcement learning is like that little-known cousin of supervised learning and unsupervised learning. Or at least it was for the longest time. RL has actually been around a really long time and I would highly recommend reading the RL book for a more detailed account on the history of RL."><meta property="og:image" content="https://skandavaidyanath.github.io/img/icon-192.png">
+  <meta property="twitter:image" content="https://skandavaidyanath.github.io/img/icon-192.png"><meta property="og:locale" content="en-us">
+  
+    
+      <meta property="article:published_time" content="2019-05-05T00:00:00&#43;01:00">
+    
+    <meta property="article:modified_time" content="2019-05-05T00:00:00&#43;01:00">
+  
+
+  
+
+
+
+  
+
+
+  
+
+
+  
+
+
+
+
+
+  <title>Introduction: Why RL? | Skanda Vaidyanath</title>
+
+</head>
+
+<body id="top" data-spy="scroll" data-offset="70" data-target="#TableOfContents" >
+
+  <aside class="search-results" id="search">
+  <div class="container">
+    <section class="search-header">
+
+      <div class="row no-gutters justify-content-between mb-3">
+        <div class="col-6">
+          <h1>Search</h1>
+        </div>
+        <div class="col-6 col-search-close">
+          <a class="js-search" href="#"><i class="fas fa-times-circle text-muted" aria-hidden="true"></i></a>
+        </div>
+      </div>
+
+      <div id="search-box">
+        
+        <input name="q" id="search-query" placeholder="Search..." autocapitalize="off"
+        autocomplete="off" autocorrect="off" spellcheck="false" type="search">
+        
+      </div>
+
+    </section>
+    <section class="section-search-results">
+
+      <div id="search-hits">
+        
+      </div>
+
+    </section>
+  </div>
+</aside>
+
+
+  
+<nav class="navbar navbar-light fixed-top navbar-expand-lg py-0 compensate-for-scrollbar" id="navbar-main">
+  <div class="container">
+
+    
+      <a class="navbar-brand" href="/">Skanda Vaidyanath</a>
+      
+      <button type="button" class="navbar-toggler" data-toggle="collapse"
+              data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+        <span><i class="fas fa-bars"></i></span>
+      </button>
+      
+
+    
+    <div class="collapse navbar-collapse" id="navbar">
+
+      
+      
+      <ul class="navbar-nav mr-auto">
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#about"><span>Home</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#post"><span>Blog</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+          
+          
+          
+            
+          
+          
+        
+
+        <li class="nav-item">
+          <a class="nav-link " href="/#publications"><span>Publications</span></a>
+        </li>
+
+        
+        
+
+        
+
+        
+        
+        
+          
+        
+
+        
+        
+        
+        
+        
+        
+
+        <li class="nav-item">
+          <a class="nav-link  active" href="/courses/"><span>Courses</span></a>
+        </li>
+
+        
+        
+
+      
+      </ul>
+      <ul class="navbar-nav ml-auto">
+      
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-search" href="#"><i class="fas fa-search" aria-hidden="true"></i></a>
+        </li>
+        
+
+        
+
+        
+        <li class="nav-item">
+          <a class="nav-link js-dark-toggle" href="#"><i class="fas fa-moon" aria-hidden="true"></i></a>
+        </li>
+        
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+
+  
+
+<div class="container-fluid docs">
+  <div class="row flex-xl-nowrap">
+    <div class="col-12 col-md-3 col-xl-2 docs-sidebar">
+      
+
+
+
+
+
+<form class="docs-search d-flex align-items-center">
+  <button class="btn docs-toggle d-md-none p-0 mr-3" type="button" data-toggle="collapse" data-target="#docs-nav" aria-controls="docs-nav" aria-expanded="false" aria-label="Toggle section navigation">
+    <span><i class="fas fa-bars"></i></span>
+  </button>
+
+  
+  <input name="q" type="search" class="form-control" placeholder="Search..." autocomplete="off">
+  
+</form>
+
+<nav class="collapse docs-links" id="docs-nav">
+  
+  
+  <div class="docs-toc-item">
+    <a class="docs-toc-link" href="/courses/rl-course/">Overview</a>
+
+  </div>
+  
+  <div class="docs-toc-item">
+    <a class="docs-toc-link" href="/courses/rl-course/post1/">Reinforcement Learning from Scratch</a>
+    <ul class="nav docs-sidenav">
+      
+      <li class="active">
+        <a href="/courses/rl-course/post1/">Introduction: Why RL?</a>
+      </li>
+      
+      <li >
+        <a href="/courses/rl-course/post2/">RL Fundamentals and MDPs</a>
+      </li>
+      
+      <li >
+        <a href="/courses/rl-course/post3/">Policies, Value Functions and the Bellman Equation</a>
+      </li>
+      
+    </ul>
+    
+
+  </div>
+  
+  
+</nav>
+
+    </div>
+
+    
+    <div class="d-none d-xl-block col-xl-2 docs-toc">
+      <ul class="nav toc-top">
+        <li><a href="#" id="back_to_top" class="docs-toc-title">Contents</a></li>
+      </ul>
+
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#what-is-reinforcement-learning">What is Reinforcement Learning?</a></li>
+    <li><a href="#how-is-it-different-from-supervised-learning-or-unsupervised-learning">How is it different from Supervised learning or Unsupervised learning?</a></li>
+    <li><a href="#what-problems-can-it-solve">What problems can it solve?</a></li>
+  </ul>
+</nav>
+
+      
+    </div>
+    
+
+    <main class="col-12 col-md-9 col-xl-8 py-md-3 pl-md-5 docs-content" role="main">
+
+      <article class="article">
+
+        <div class="docs-article-container">
+          <h1>Introduction: Why RL?</h1>
+
+          <div class="article-style">
+            <p>Hi and welcome to the first post of this RL course! In this post, my aim will be to introduce the idea of RL to you and talk about the problems it solves and why it is important.</p>
+<p>Reinforcement learning is like that little-known cousin of supervised learning and unsupervised learning. Or at least it was for the longest time. RL has actually been around a really long time and I would highly recommend reading the RL book for a more detailed account on the history of RL. But in recent times, its been gaining a lot of attention, mainly due to the conquests of <a href="https://deepmind.com/blog/article/alphazero-shedding-new-light-grand-games-chess-shogi-and-go">DeepMind&rsquo;s AlphaZero</a>.</p>
+<p>But having said that, people still don&rsquo;t quite know what RL is yet and don&rsquo;t know how and when to use it. So as a part of this introductory blog, I will try to answer three questions that are often asked about RL.</p>
+<ol>
+<li>What is Reinforcement Learning?</li>
+<li>How is it different from Supervised learning or Unsupervised learning?</li>
+<li>What problems can it solve?</li>
+</ol>
+<p>And lets begin!</p>
+<h2 id="what-is-reinforcement-learning">What is Reinforcement Learning?</h2>
+<p>Reinforcement learning is a paradigm of Machine Learning (ML). The most general way to divide ML into three parts would be as Supervised learning (SL), Unsupervised learning (USL) and Reinforcement Learning. But most people only talk about SL and USL when they talk about ML.
+So my first job is to explain why the third paradigm is important and how it is different from the first two.</p>
+<blockquote>
+<p>Reinforcement learning is an area of machine learning concerned with how software agents ought to take actions in an environment in order to maximize some notion of cumulative reward.</p>
+</blockquote>
+<p>The above definition is taken from Wikipedia. 
+The definition speaks about &ldquo;agents&rdquo; taking &ldquo;actions&rdquo; in &ldquo;environments&rdquo; to maximize &ldquo;rewards&rdquo;. But what does all this mean? Lets break it down, but before that, here is a simpler definition.</p>
+<blockquote>
+<p>Reinforcement learning is simply learning by trial and error.</p>
+</blockquote>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="/img/post1_rl.png" data-caption="The RL Setup. Source: Google Images">
+<img src="/img/post1_rl.png" alt="" ></a>
+
+
+  
+  
+  <figcaption>
+    The RL Setup. Source: Google Images
+  </figcaption>
+
+
+</figure>
+
+<p>Think about how you started learning to ride a bike. You probably tried many different things (turning the handle-bar in different directions, trying to pedal backwards) and continued doing more of what worked (&ldquo;worked&rdquo; in this context probably means &ldquo;did not fall and moved in the intended direction&rdquo;) and less of what didn&rsquo;t. Nobody gave you clear instructions on what to do at each step, you just tried things and they worked (or didn&rsquo;t). In fact, humans gain several skills in the same fashion. Imagine you&rsquo;re playing a brand new video game without reading the instructions or picking up a new sport. Humans learn several tasks by trial and error and that&rsquo;s exactly what we&rsquo;re trying to emulate with RL. Trying to get as close as possible to the way humans learn.</p>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="/img/post1_bicycle.jpg" data-caption="Learning to ride a bike. Source: Google Images">
+<img src="/img/post1_bicycle.jpg" alt="" ></a>
+
+
+  
+  
+  <figcaption>
+    Learning to ride a bike. Source: Google Images
+  </figcaption>
+
+
+</figure>
+
+<p>With that intuition, lets take a jab at the Wikipedia definition again. The &ldquo;agent&rdquo; in our biker example is the person trying to learn to ride a bike. The &ldquo;environment&rdquo; is everything that may affect the person riding the bike &ndash; so this could be the road, the traffic, the weather, etc. Remember the environment is dynamic &ndash; the traffic could get heavier, the weather could get rainier, etc. So the agent has to account for the different settings of the environment. As for &ldquo;actions&rdquo;, these are the different decisions the agent can make &ndash; for example, they could be &ldquo;turn left&rdquo;, &ldquo;turn right&rdquo;, etc. The agent must decide based on the state of the environment, what the right action to play is at a given point. And finally &ldquo;rewards&rdquo; is some sort of feedback we get for the series (could be singular) of actions we just took. So we would get a positive reward if we reached our destination and negative if we fell down for example. All these terms will be dealt with more formally in the next post. For now, just make sure you get the intuition.</p>
+<p>So we have an agent that is going to try and take different possible actions in its environment (which is dynamic!) and learn the best actions under each setting of the environment in order to maximise some notion of a cumulative reward (a feedback signal). All this will get clearer as we go along but for now just remember this.</p>
+<p><strong>Bottomline: RL is just learning by trial and error to pick the right actions depending on the state of the environment.</strong></p>
+<h2 id="how-is-it-different-from-supervised-learning-or-unsupervised-learning">How is it different from Supervised learning or Unsupervised learning?</h2>
+<p>This is the question I get asked the most about RL. The difference between RL and USL is quite clear. In USL, there is absolutely no form of feedback or supervision whereas in RL we do get some sort of feedback in the form of a reward signal. Hence, USL is often about finding some sort of structure or patterns in data with absolutely no supervision or feedback. This is not what we&rsquo;re dealing with here.</p>
+<p><strong>So Reinforcement Learning is not Unsupervised learning.</strong></p>
+<p>The more pertinent question is &ndash; how is it different from supervised learning? Is RL just SL with class labels given in a different manner?</p>
+<p>Lets look at another very common example. We want to teach our computer to play Tic Tac Toe.</p>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="/img/post1_tic_tac_toe.png" data-caption="Tic Tac Toe Game Tree. Source: Google Images">
+<img src="/img/post1_tic_tac_toe.png" alt="" ></a>
+
+
+  
+  
+  <figcaption>
+    Tic Tac Toe Game Tree. Source: Google Images
+  </figcaption>
+
+
+</figure>
+
+<p>Our data is in the form of several games that have been played from start to finish. If we consider this as training data for our SL model, the only labels we could possibly decipher from these games would be the final outcome &ndash; the winner of the game or if it was a draw. If we are able to somehow encode the game and train a classifier on the data, this SL model would be able to predict the outcome of a game (which is not very useful) but not <em>how to play the game</em>. Stop for a second, think about all the different potential SL solutions to this problem and convince yourself that this would be an extremely difficult (if even possible) problem to solve if we do not have supervised labels telling us what the best move is for every board position.</p>
+<p>If we wanted to train a SL model to learn <em>how to play the game</em>, we would need training data in the form of <em>the best move to play at every board position</em>. But alas, we do not have such information and this is the case in most problems (think about riding a cycle or playing chess or a video game).</p>
+<p>So how does RL solve the problem? Think of the Tic Tac Toe board and the opponent as an environment now (we can convert our series of game descriptions to such a setup) and our agent is trying to learn how to play the game. If we have enough game descriptions or if the agent can experiment by trying different moves in different board positions through <em>trial and error</em> and observes the final outcome, then the agent can learn the best moves in the different positions! We&rsquo;ll look into how exactly this is possible over the next couple of posts.</p>
+<p>But since our aim was just to show that RL and SL are not the same, we are done here. SL requires &ldquo;step-wise&rdquo; (this is not a technical term and hence is in quotes, but you get the idea) labels to learn <em>how to do a task</em>. It requires &ldquo;strong&rdquo; supervision. RL can do the same thing with some sort of &ldquo;weak&rdquo;/&ldquo;distant&rdquo;/&ldquo;semi&rdquo;-supervision.</p>
+<p><strong>So Reinforcement Learning is not Supervised learning either.</strong></p>
+<h2 id="what-problems-can-it-solve">What problems can it solve?</h2>
+<p>All this sounds great but what problems can RL solve? So far we&rsquo;ve spoken about riding bikes and playing chess and video games but are there any significant real-world problems RL can solve?</p>
+<p>As it turns out there are several. RL is also commonly referred to as <strong>Sequential Decision Making</strong> or <strong>Decision Making under Uncertainty</strong> or learning through <strong>Interactions</strong>. This makes it abundantly clear as to why it is not the same as SL or USL. There is no interaction or sequential decision making in SL or USL. There is a need for a paradigm that learns through interactions and not direct class labels in &ldquo;uncertain&rdquo; conditions. When we put it this way, we can think of several applications for RL in the real-world. I&rsquo;ll talk about a few here.</p>
+<p>
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="/img/post1_pong.jpg" data-caption="Atari Games: Pong. Source: Google Images">
+<img src="/img/post1_pong.jpg" alt="" ></a>
+
+
+  
+  
+  <figcaption>
+    Atari Games: Pong. Source: Google Images
+  </figcaption>
+
+
+</figure>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="/img/post1_alphazero.jpg" data-caption="AlphaZero: Chess. Source: Google Images">
+<img src="/img/post1_alphazero.jpg" alt="" ></a>
+
+
+  
+  
+  <figcaption>
+    AlphaZero: Chess. Source: Google Images
+  </figcaption>
+
+
+</figure>
+</p>
+<p>RL gained massive popularity because of <a href="https://deepmind.com/">Google DeepMind</a> and its success at playing Go and Chess and <a href="https://arxiv.org/abs/1312.5602">Atari Games</a> as well but there are several other applications of RL.</p>
+<p>RL is extremely versatile and can be used along with several other common ML areas like Computer Vision (CV) and Natural Language Processing (NLP).</p>
+<p>The best example of using RL with CV is probably self-driving cars. With NLP, it can be used in dialogue systems. Another massive application area is in robotics and control. It can be used to train multi-agent systems, for example, a swarm of drones communicating with each other. One of my favourite applications of RL is personalized learning where an RL agent can design an optimal course for a student with the right number of tests/assignments administered at the right time to encourage maximum learning. There is similar work being done on personalized healthcare as well.</p>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+<figure>
+
+
+  <a data-fancybox="" href="/img/post1_robotics.jpg" data-caption="Robotics. Source: Google Images">
+<img src="/img/post1_robotics.jpg" alt="" ></a>
+
+
+  
+  
+  <figcaption>
+    Robotics. Source: Google Images
+  </figcaption>
+
+
+</figure>
+
+<p>And so there are a ton of different applications that leverage the power of RL. There are also other slightly different uses, for example, RL can be used to <a href="https://skandavaidyanath.github.io/post/bridging-the-gaps-with-rl/">overcome non-differentiable steps in deep learning</a>.</p>
+<p>And with that, we&rsquo;ve answered all the questions that we set out to! We get into a lot more details in the <a href="https://skandavaidyanath.github.io/courses/rl-course/post2/">next post</a> so make sure you take a look at that as well.</p>
+<p>Feel free to let me know if you have any feedback!</p>
+
+          </div>
+
+          
+
+
+
+          
+          <div class="article-widget">
+            
+<div class="post-nav">
+  
+  
+  
+  <div class="post-nav-item">
+    <div class="meta-nav">Next</div>
+    <a href="/courses/rl-course/post2/" rel="prev">RL Fundamentals and MDPs</a>
+  </div>
+  
+</div>
+
+          </div>
+          
+        </div>
+
+        <div class="body-footer">
+          <p>Last updated on May 5, 2019</p>
+
+          
+<p class="edit-page">
+  <a href="https://github.com/gcushen/hugo-academic/edit/master/content/courses/rl-course/post1.md">
+    <i class="fas fa-pen pr-2"></i>Edit this page
+  </a>
+</p>
+
+
+
+          
+
+        </div>
+
+      </article>
+
+      <footer class="site-footer">
+  
+
+  <p class="powered-by">
+    
+
+    Powered by the
+    <a href="https://sourcethemes.com/academic/" target="_blank" rel="noopener">Academic theme</a> for
+    <a href="https://gohugo.io" target="_blank" rel="noopener">Hugo</a>.
+
+    
+  </p>
+</footer>
+
+
+    </main>
+  </div>
+</div>
+
+
+      
+
+    
+    
+    
+    <script src="/js/mathjax-config.js"></script>
+    
+
+    
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js" integrity="sha256-lqvxZrPLtfffUl2G/e7szqSvPBILGbwmsGE1MKlOi0Q=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.isotope/3.0.6/isotope.pkgd.min.js" integrity="sha256-CBrpuqrMhXwcLLUd5tvQ4euBHCdh7wGlDfNz8vbu/iI=" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js" integrity="sha256-X5PoE3KU5l+JcX+w09p/wHl9AzK333C4hJ2I9S5mD4M=" crossorigin="anonymous"></script>
+
+      
+
+      
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js" integrity="sha256-aYTdUrn6Ow1DDgh5JTc3aDGnnju48y/1c8s1dgkYPQ8=" crossorigin="anonymous"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/languages/r.min.js"></script>
+        
+      
+
+      
+      
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/MathJax.js?config=TeX-AMS_CHTML-full" integrity="sha256-GhM+5JHb6QUzOQPXSJLEWP7R73CbkisjzK5Eyij4U9w=" crossorigin="anonymous" async></script>
+      
+    
+
+    
+    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin="anonymous"></script>
+    
+
+    
+    
+    <script>hljs.initHighlightingOnLoad();</script>
+    
+
+    
+    
+    
+    
+    
+    
+    <script>
+      const search_config = {"indexURI":"/index.json","minLength":1,"threshold":0.3};
+      const i18n = {"no_results":"No results found","placeholder":"Search...","results":"results found"};
+      const content_type = {
+        'post': "Posts",
+        'project': "Projects",
+        'publication' : "Publications",
+        'talk' : "Talks"
+        };
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/anchor-js/4.1.1/anchor.min.js" integrity="sha256-pB/deHc9CGfFpJRjC43imB29Rse8tak+5eXqntO94ck=" crossorigin="anonymous"></script>
+    <script>
+      anchors.add();
+    </script>
+    
+
+    
+    
+    <script id="search-hit-fuse-template" type="text/x-template">
+      <div class="search-hit" id="summary-{{key}}">
+      <div class="search-hit-content">
+        <div class="search-hit-name">
+          <a href="{{relpermalink}}">{{title}}</a>
+          <div class="article-metadata search-hit-type">{{type}}</div>
+          <p class="search-hit-description">{{snippet}}</p>
+        </div>
+      </div>
+      </div>
+    </script>
+    
+
+    
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.2.1/fuse.min.js" integrity="sha256-VzgmKYmhsGNNN4Ph1kMW+BjoYJM2jV5i4IlFoeZA9XI=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+    
+
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+      
+    
+    
+    
+    
+    <script src="/js/academic.min.c5b98a8914247ae95edfbe976665d60f.js"></script>
+
+    
+
+
+
+
+
+
+  
+
+  
+<div id="modal" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Cite</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <pre><code class="tex hljs"></code></pre>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-outline-primary my-1 js-copy-cite" href="#" target="_blank">
+          <i class="fas fa-copy"></i> Copy
+        </a>
+        <a class="btn btn-outline-primary my-1 js-download-cite" href="#" target="_blank">
+          <i class="fas fa-download"></i> Download
+        </a>
+        <div id="modal-error"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
