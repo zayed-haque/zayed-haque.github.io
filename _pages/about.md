@@ -23,5 +23,7 @@ Hi there! I'm an aspiring data scientist who loves finding patterns and connecti
 I am currently pursuing my B.Tech in Computer Science and Technology specialization in Data Science
 
 Proficient: Tableau, Python (scikit-learn, NumPy, SciPy, pandas), Excel, C , C++, Apache Spark
+
 Knowledgeable: mySQL, R
+
 Familiar: NLP (Natural Language Processing), Computer Vision, Reinforcement Learning
