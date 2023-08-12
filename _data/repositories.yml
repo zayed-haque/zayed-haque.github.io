@@ -1,12 +1,9 @@
 github_users:
-  - torvalds
-  - alshedivat
+  - zayed-haque
 
 github_repos:
-  - alshedivat/al-folio
-  - twbs/bootstrap
-  - jekyll/jekyll
-  - jquery/jquery
-  - FortAwesome/Font-Awesome
-  - jpswalsh/academicons
-  - mathjax/MathJax
+  - zayed-haque/Rhythm-Generator
+  - zayed-haque/Cycle-GAN-data-augmentation-of-Lemon-Leaf 
+  - zayed-haque/Line-of-Sight-for-Communication-Channels 
+  - zayed-haque/Realtime-Sentiment-Analysis-using-Spark
+  - zayed-haque/UAV-Target-Detection
